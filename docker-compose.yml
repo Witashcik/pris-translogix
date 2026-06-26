@@ -1,0 +1,7 @@
+services:
+  translogix:
+    build: .
+    container_name: translogix-lab1
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

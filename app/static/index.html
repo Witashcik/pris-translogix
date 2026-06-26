@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransLogix MVP</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="layout">
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">ПРИС · Лабораторная работа №1 · Vibe Coding MVP</p>
+        <h1>TransLogix</h1>
+        <p class="lead">Интеллектуальная логистическая система для маршрутизации доставок, контроля запасов и базового мониторинга прототипа.</p>
+        <div class="hero-actions">
+          <a class="link-button" href="/docs" target="_blank">Открыть Swagger API</a>
+          <button class="ghost" id="refreshAllButton">Обновить данные</button>
+        </div>
+      </div>
+      <div class="status-panel">
+        <div class="status" id="health">Проверка сервиса...</div>
+        <p id="version">Версия загружается...</p>
+      </div>
+    </section>
+
+    <section class="stats" id="dashboardStats">
+      <div class="stat-card"><span>Склады</span><strong id="statWarehouses">—</strong></div>
+      <div class="stat-card"><span>Точки доставки</span><strong id="statDeliveries">—</strong></div>
+      <div class="stat-card"><span>Срочные доставки</span><strong id="statPriority">—</strong></div>
+      <div class="stat-card"><span>Средняя загрузка складов</span><strong id="statLoad">—</strong></div>
+    </section>
+
+    <section class="grid two-columns">
+      <article class="card control-card">
+        <div class="card-title-row">
+          <div>
+            <p class="section-label">Модуль 1</p>
+            <h2>Оптимизация маршрута</h2>
+          </div>
+          <span class="badge">AI-like heuristic</span>
+        </div>
+        <p>Пользователь выбирает склад и стратегию. Сервис строит маршрут с учётом приоритета, расстояния и времени обслуживания.</p>
+        <div class="form-grid">
+          <label>Склад
+            <select id="routeWarehouse"></select>
+          </label>
+          <label>Стратегия
+            <select id="routeStrategy">
+              <option value="priority_balanced">Приоритет + расстояние</option>
+              <option value="nearest_first">Ближайшая точка</option>
+              <option value="express_only">Только срочные</option>
+            </select>
+          </label>
+        </div>
+        <button id="routeButton">Построить маршрут</button>
+        <div class="mini-stats" id="routeMiniStats"></div>
+        <div class="route-timeline" id="routeTimeline">Маршрут ещё не построен.</div>
+      </article>
+
+      <article class="card control-card">
+        <div class="card-title-row">
+          <div>
+            <p class="section-label">Модуль 2</p>
+            <h2>Прогноз запасов</h2>
+          </div>
+          <span class="badge">Inventory forecast</span>
+        </div>
+        <p>Сервис рассчитывает прогноз спроса и показывает, какие товары требуют пополнения склада.</p>
+        <div class="form-grid">
+          <label>Склад
+            <select id="forecastWarehouse"></select>
+          </label>
+          <label>Период, дней
+            <input id="forecastDays" type="number" min="1" max="60" value="7" />
+          </label>
+          <label>Сценарий спроса
+            <select id="forecastScenario">
+              <option value="normal">Обычный спрос</option>
+              <option value="promo">Промо / высокий спрос</option>
+              <option value="low_demand">Сниженный спрос</option>
+            </select>
+          </label>
+        </div>
+        <button id="forecastButton">Рассчитать прогноз</button>
+        <div class="summary-banner" id="forecastSummary">Прогноз ещё не рассчитан.</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>SKU</th><th>Остаток</th><th>Спрос</th><th>После периода</th><th>Статус</th></tr>
+            </thead>
+            <tbody id="forecastTable"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-columns">
+      <article class="card">
+        <div class="card-title-row">
+          <div>
+            <p class="section-label">Данные</p>
+            <h2>Склады и точки доставки</h2>
+          </div>
+          <button class="ghost small" id="loadDataButton">Показать данные</button>
+        </div>
+        <div class="data-list" id="dataList">Нажмите кнопку, чтобы вывести демо-данные.</div>
+      </article>
+
+      <article class="card">
+        <div class="card-title-row">
+          <div>
+            <p class="section-label">Аналитика</p>
+            <h2>Оповещения и история</h2>
+          </div>
+          <button class="ghost small" id="alertsButton">Проверить риски</button>
+        </div>
+        <div class="alerts" id="alertsOutput">Оповещения ещё не загружены.</div>
+        <h3>Последние операции</h3>
+        <div class="history" id="historyOutput">История пока пустая.</div>
+      </article>
+    </section>
+
+    <section class="card metrics-card">
+      <div class="card-title-row">
+        <div>
+          <p class="section-label">Мониторинг</p>
+          <h2>Метрики прототипа</h2>
+        </div>
+        <button id="metricsButton">Обновить метрики</button>
+      </div>
+      <div class="metrics-grid" id="metricsOutput">Метрики ещё не загружены.</div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
